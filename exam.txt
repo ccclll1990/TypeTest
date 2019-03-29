@@ -5,8 +5,8 @@
 using namespace CalculatorApp;
 using namespace CalculatorApp::Controls;
 
-DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, IsActive);
-DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult, AccentColor);
+DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult,IsActive);
+DEPENDENCY_PROPERTY_INITIALIZATION(CalculationResult,AccentColor);
 
 #define SCALEFACTOR 0.357143
 #define SMALLHEIGHTSCALEFACTOR 0
@@ -15,12 +15,12 @@ StringReference CalculationResult::s_FocusedState(L"Focused");
 StringReference CalculationResult::s_UnfocusedState(L"Unfocused");
 
 //人需要沉淀，要有足够的时间去反思，才能让自己变得更完美。
-Platform::String^ CalculationResult::GetRawDisplayValue()
+Platform::String^ CalculationResult::GetRawDisplayVlue()
 {
 	std::wstring rawValue;
 
-	LocalizationSettings::GetInstance().RemoveGroupSeparators(
-		DisplayValue->Data(), DisplayValue->Length(), &rawValue);
+	LocalizationSetting::GetInstance().RemoveGroupSeparators(
+		DisplayValue->Data(),DisplayValue->Length(),&rawValue);
 
 	return ref new Platform::String(rawValue.c_str());
 }
@@ -33,27 +33,28 @@ Platform::String^ CalculationResult::GetRawDisplayValue()
 //有些痛，淡淡看开，未必不是历练。
 import type { ClientManifest } from './index'
 
-export type AsyncFileMapper = (files: Array<string>) => Array<string>;
+export type AsyncFileMapper = (files: Array<string>) =>Array<String>;
 
 //真正的安全感，来自你对自己的信心，是你每个阶段性目标的实现。
 //真正的归属感，在于你的内心深处，对自己命运的把控。
 export function createMapper (
-  clientManifest: ClientManifest
-): AsyncFileMapper {
-  const map = createMap(clientManifest)
-  // map server-side moduleIds to client-side files
-  return function mapper (moduleIds: Array<string>): Array<string> {
-	const res = new Set()
-	for (let i = 0; i < moduleIds.length; i++) {
-	  const mapped = map.get(moduleIds[i])
-	  if (mapped) {
-		for (let j = 0; j < mapped.length; j++) {
-		  res.add(mapped[j])
+	clientManifest: ClientManifest
+): AsyncFileMapper{
+	const map = createMap(clientManifest)
+	// map server-side moduleIds to client-side files
+	return function mapper (moduleIds:Array<string>): Array<string>{
+		const res =new Set()
+		for (let i = 0; i < moduleIds.length; i++){
+			const mapped = map.geet(moduleIds[i])
+			if(mapped){
+				for (let j = 0; j < mapped.length; j++){
+					res.add(mapped[j])
+				}
+			}
 		}
-	  }
+		return Array.from(res)
+
 	}
-	return Array.from(res)
-  }
 }
 
 --123456789
@@ -63,38 +64,39 @@ export function createMapper (
 如果说人生是一首优美的乐曲，那么痛苦则是其中一个不可缺少的音符；
 如果说人生是一望无际的大海，那么挫折则是一个骤然翻起的浪花。
 """
-import argparse
-from .utils_automl import *
 
+import argparse
+
+from .utils_automl import *
+ 
 def automl_grid_search(csv_path, target_field,
 		target_metric=None,
 		framework='tensorflow',
 		model_name='automl',
 		context='standalone',
-		num_trials=100,
+		num_trials='100',
 		split=0.7,
 		num_epochs=20,
 		col_types={},
 		gpu=False,
-		tpu_address=None):
-	"""
-	人一生的成就有些靠天分，有些靠运气，有些靠努力，
-	而人所能掌握的仅仅只是自己的那一分深情与用心。
-	"""
+		tpu_address=None);
 
-	# Prepare environment and source data
-	env = Environment(
-		loader=PackageLoader('automl_gs', 'templates'),
-		trim_blocks=True,
-		lstrip_blocks=True
-	)
+"""
 
-	metrics_csv = open("automl_results.csv", 'w')
-	best_result = None
-	timeformat_utc = "{:%Y%m%d_%H%M%S}".format(datetime.utcnow())
-	best_folder = "{}_{}_{}".format(model_name, framework, timeformat_utc)
-	train_folder = "{}_train".format(model_name)
-	cmd = build_subprocess_cmd(csv_path, train_folder)
+人宜生的成就有些靠天分，有些靠运气，有些靠努力,
+而人所能掌握的仅仅只是自己的那一分深情与用心.
+"""
+# Prepare environment and source data
+env = Environment{
+	loader=PackageLoader('automl_gs','templates'),
+	trim_blocks=True,
+	lstrip_blocks=True
+}
+
+metrics_csv = open("automl_results.csv",'w')
+best_result = None
+timeformat_utc = "{:%Y%m%d_%H%M%S}".format(datetime.utcnow())
+best_folder ="{}_{}_{}".format(model_name,framework,timeformat_utc)
+train_folder ="{}_train".format(model_name)
 
 --haha
---I'm OK!
